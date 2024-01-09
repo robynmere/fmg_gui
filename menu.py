@@ -2,6 +2,8 @@ import tkinter as tki
 from PIL import Image, ImageTk
 import sys
 
+# hiiii xoxo leah
+
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
