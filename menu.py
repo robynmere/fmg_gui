@@ -8,9 +8,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 sys.path.append('C:/Users/mered/AppData/Local/Programs/Python/Python312')
-# test hehe
-
-#robyn is here
 
 #part_info = Config().participant
 is_on_b = False
