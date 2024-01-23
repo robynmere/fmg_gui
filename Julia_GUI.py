@@ -1,10 +1,16 @@
-from tkinter import *
+from tkinter import * #imports all of tkinter
+from PIL import ImageTk, Image #use pip3 to install
 
 root = Tk()
 
 #creating main window
 window_title = Label(root, text = "FMG Wearable Device")
 window_title.grid(row = 0, column = 3)
+
+#functions for buttons to call
+def record_click(): #creating a function for the button to call
+    myLabel = Label(root, text="this function represents recording data")
+    myLabel.grid(row = 5, column = 4)
 
 
 #Inputs
@@ -22,9 +28,7 @@ max_file.grid(row = 2, column = 1)
 button_quit = Button(root, text = " Exit Program", command = root.quit)
 button_quit.grid(row = 5, column = 5)
 
-def record_click(): #creating a function for the button to call
-    myLabel = Label(root, text="this function represents recording data")
-    myLabel.grid(row = 5, column = 4)
+
 
 record_data= Button(root, text="Record Data", command=record_click) #no paranthese on myclick
 record_data.grid(row = 4, column = 4)
