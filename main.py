@@ -24,6 +24,9 @@ def stop_rec():
 def launch_train():
     os.system('python3 train.py')
 
+def launch_example():
+    os.system('python3 gestures.py')
+
 def enter_seconds():
     seconds = display_length.get()
 
