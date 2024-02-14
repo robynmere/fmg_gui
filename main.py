@@ -6,7 +6,7 @@ from matplotlib.backends.backend_tkagg import(FigureCanvasTkAgg, NavigationToolb
 import sys
 import os
 
-#creating main window
+#creating main window hi Rob dog
 root = tk.Tk() 
 root.title('FMG Wearable Device') #window title
 root.geometry('{}x{}'.format(1000,1000))
