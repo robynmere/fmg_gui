@@ -9,17 +9,24 @@ import os
 #creating main window
 root = tk.Tk() 
 root.title('FMG Wearable Device') #window title
-root.geometry('{}x{}'.format(1000,1000))
-
+#root.geometry('{}x{}'.format(1800,1600))
 
 #functions 
 def start_rec(): 
-    exam = Label(root, text="this function represents recording data")
-    exam.grid(row = 0, column = 1)
+    exam = Label(root, text="       Recording has started.      ", bg="white")
+    exam.grid(row = 20, column = 0)
 
 def stop_rec():
-    stopi = Label(root, text="Recording has been stopped.")
-    stopi.grid(row=2, column=1)
+    stopi = Label(root, text="Recording has been stopped.", bg="white")
+    stopi.grid(row=20, column=0)
+
+def start_graph(): 
+    exam = Label(root, text="       Graphing has started.     ", bg="white")
+    exam.grid(row = 20, column = 0)
+
+def stop_graph():
+    stopi = Label(root, text="Graphing has been stopped.", bg="white")
+    stopi.grid(row=20, column=0)
 
 def launch_train():
     os.system('python3 train.py')
@@ -27,61 +34,106 @@ def launch_train():
 def launch_example():
     os.system('python3 gestures.py')
 
-def enter_seconds():
+def seconds():
     seconds = display_length.get()
 
-def enter_size():
+def size():
     size = max_file.get()
 
-#getting display length for graph from user
-L1 = Label(root, text = "Display length for FMG data display (s): ")
-L1.grid(row=1, column=0, sticky="SW")
+def connect_ble():
+    connect_request = Label(root, text = "  BLE connection requested.   ", bg="white")
+    connect_request.grid(row=20, column=0)
 
+#user inputs 
+display_length_label = Label(root, text = "Display length for graphs (s): ")
 display_length= Entry(root)
-display_length.grid(row=2, column=0, sticky="NW")
+display_length_enter = Button(root, text = 'Enter', command = seconds)
 
-display_length_enter = Button(root, text = 'Enter', command = enter_seconds)
-display_length_enter.grid(row=2, column=1, sticky = 'NW')
 
-#getting max file size for recording from user
-L2 = Label(root, text = "Maximum file size for recording (MB): ")
-L2.grid(row = 3, column = 0, sticky="SW")
-
+max_file_label = Label(root, text = "Maximum file size for recording (MB): ")
 max_file = Entry(root)
-max_file.grid(row = 4, column = 0, sticky="NW")
+max_file_enter = Button(root, text = 'Enter', command = size)
 
-max_file_enter = Button(root, text = 'Enter', command = enter_size)
-max_file_enter.grid(row = 4, column = 1, sticky = 'NW')
+#message board 
+message_label = Label(root, text="Messages:")
 
-#exit button
-button_quit = Button(root, text = "Exit", command = root.quit)
-button_quit.grid(row = 15, column = 10)
+#other buttons
+training_mode = Button(root, text = "Launch Training Mode", command = launch_train)
 
-#graph
-yaxis = np.random.uniform(low=0, high=6, size=100)
-xaxis = np.arange(1, 101).tolist()
+ble = Button(root, text="Initiate BLE Connection", command = connect_ble)
 
-fig = plt.figure(figsize=(3,2))
-plt.plot(xaxis, yaxis)
+start_gr = Button(root, text="Start Graph", command=start_graph)
+stop_gr = Button(root, text="Stop Graph", command=stop_graph)
+
+start_record = Button(root, text="Start Recording", bg="green", command=start_rec)
+stop_record = Button(root, text="Stop Recording", bg="red", command=stop_rec)
+
+
+#force graph
+force_data = np.random.uniform(low=0, high=6, size=100)
+xaxis_time = np.arange(1, 101).tolist()
+
+force_fig = plt.figure(figsize=(3,1.75))
+plt.plot(xaxis_time, force_data)
 plt.xticks(fontsize=4)
 plt.yticks(fontsize=4)
+plt.title("Force Sensor", fontsize=4)
 
-canvas = FigureCanvasTkAgg(fig, master=root)
-canvas.draw()
-canvas.get_tk_widget().grid(row=1, column=5, rowspan=4, columnspan=12)
+force_canvas = FigureCanvasTkAgg(force_fig, master=root)
+force_canvas.draw()
+force_canvas.get_tk_widget().grid(row=0, column=5, rowspan=10)
 
-toolbarFrame = tk.Frame(master=root)
-toolbarFrame.grid(row=4,column=5)
-toolbar = NavigationToolbar2Tk(canvas, toolbarFrame)
+force_toolbarFrame = tk.Frame(master=root)
+force_toolbarFrame.grid(row=4,column=5)
+force_toolbar = NavigationToolbar2Tk(force_canvas, force_toolbarFrame)
 
-# putting buttons on screen
-training_mode = Button(root, text = "Launch Training Mode", command = launch_train)
+#angular velocity graph
+angular_data = np.random.uniform(low=0, high=1, size=100)
+
+angular_fig = plt.figure(figsize=(3,1.75))
+plt.plot(xaxis_time, angular_data)
+plt.xticks(fontsize=4)
+plt.yticks(fontsize=4)
+plt.title("Angular Velocity", fontsize=4)
+
+angular_canvas = FigureCanvasTkAgg(angular_fig, master=root)
+angular_canvas.draw()
+angular_canvas.get_tk_widget().grid(row=10, column=5, rowspan=8)
+
+angular_toolbarFrame = tk.Frame(master=root)
+angular_toolbarFrame.grid(row=4,column=5)
+angular_toolbar = NavigationToolbar2Tk(angular_canvas, angular_toolbarFrame)
+
+#acceleration graph
+accel_data = np.random.uniform(low=0, high=1, size=100)
+
+accel_fig = plt.figure(figsize=(3,1.75))
+plt.plot(xaxis_time, accel_data)
+plt.xticks(fontsize=4)
+plt.yticks(fontsize=4)
+plt.title("Acceleration", fontsize=4)
+
+accel_canvas = FigureCanvasTkAgg(accel_fig, master=root)
+accel_canvas.draw()
+accel_canvas.get_tk_widget().grid(row=20, column=5, rowspan=8)
+
+accel_toolbarFrame = tk.Frame(master=root)
+accel_toolbarFrame.grid(row=4,column=5)
+accel_toolbar = NavigationToolbar2Tk(accel_canvas, accel_toolbarFrame)
+
+#grid manager
+display_length_label.grid(row=0, column=0, sticky="NW")
+display_length.grid(row=0, column=1, sticky="NW")
+display_length_enter.grid(row=1, column=1)
+max_file_label.grid(row = 3, column = 0, sticky="NW")
+max_file.grid(row = 3, column = 1, sticky="NW")
+max_file_enter.grid(row = 4, column = 1)
 training_mode.grid(row = 7, column = 0, sticky = "NS")
-
-start_record= Button(root, text="Start Recording", bg="green", command=start_rec) #no paranthese on myclick
-start_record.grid(row = 10, column = 0)
-
-stop_record = Button(root, text="Stop Recording", bg="red", command=stop_rec)
-stop_record.grid(row=11, column=0)
+start_record.grid(row = 12, column = 0)
+stop_record.grid(row=13, column=0)
+start_gr.grid(row = 10, column = 0)
+stop_gr.grid(row=11, column=0)
+ble.grid(row=14, column=0)
+message_label.grid(row=19, column=0, sticky = "NW")
 
 root.mainloop()
