@@ -40,7 +40,7 @@ def seconds():
 def size():
     size = max_file.get()
 
-def connect_ble():
+def connect_ble(): #sarah BLE initiation function goes here
     connect_request = Label(root, text = "  BLE connection requested.   ", bg="white")
     connect_request.grid(row=20, column=0)
 
