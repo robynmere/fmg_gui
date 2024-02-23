@@ -1,26 +1,52 @@
 import tkinter as tk
 from tkinter import *
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.backends.backend_tkagg import(FigureCanvasTkAgg, NavigationToolbar2Tk)
 import sys
 import os
-from tkVideoPlayer import TkinterVideo #leah can you try to pip3 install tkVideoPlayer
+from PIL import ImageTk, Image  
 
 #creating main window
 root = tk.Tk() 
-root.title('Machine Learning Gestures') #window title
+root.title('Machine Learning Gestures') 
 root.geometry('{}x{}'.format(1000,1000))
 
-#my_label = Label(root, text = "Please follow along with the video below to learn the gestures for control.")
-#my_label.pack()
-#player = tkvideo("IMG_2669.mp4", my_label, loop = 1, size = (1280,720))
-#player.play()
+def forward():  
+    global j # creating a global variable j  
+    j = j + 1  
+    try:  
+        img_label.config(image = image_list[j])  
+    except:  
+        j = -1  
+        forward() # calling the forward function  
 
-videoplayer = TkinterVideo(master=root, scaled=True)
-videoplayer.load(r"IMG_2669.mp4")
-videoplayer.pack(expand=True, fill="both")
+def backward():  
+    global j # creating a global variable j  
+  
+    j = j - 1  
+    try:  
+        img_label.config(image = image_list[j])  
+    except:  
+        j = 0  
+        backward() # calling the forward function 
 
-videoplayer.play() # play the video
+back_button = Button(root, text = 'Back', command = backward)
+back_button.grid(row=0, column=0)
+    
+forward_button = Button(root, text = 'Next', command = forward)
+forward_button.grid(row=0, column = 3)
+  
+image_no = ImageTk.PhotoImage(Image.open("Images/No_Motion.png").resize((500, 500)))
+image_chuck = ImageTk.PhotoImage(Image.open("Images/Chuck_Grip.png").resize((500, 500)))
+image_open = ImageTk.PhotoImage(Image.open("Images/Hand_Open.png").resize((500, 500)))
+image_close = ImageTk.PhotoImage(Image.open("Images/Hand_Close.png").resize((500, 500)))
+image_down = ImageTk.PhotoImage(Image.open("Images/Thumbs_Down.png").resize((500, 500)))
+image_up = ImageTk.PhotoImage(Image.open("Images/Thumbs_Up.png").resize((500, 500)))
+image_ext = ImageTk.PhotoImage(Image.open("Images/Wrist_Extension.png").resize((500, 500)))
+image_flex = ImageTk.PhotoImage(Image.open("Images/Wrist_Flexion.png").resize((500, 500)))
+
+image_list = [image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]  
+j = 0  
+img_label = Label(root, image = image_list[j]) 
+img_label.grid(row=0, column=2)
+
 
 root.mainloop()
