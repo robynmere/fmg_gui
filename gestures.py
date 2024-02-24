@@ -13,7 +13,8 @@ def forward():
     global j # creating a global variable j  
     j = j + 1  
     try:  
-        img_label.config(image = image_list[j])  
+        img_label.config(image = image_list[j])
+        name_label.config(text = name_list[j])
     except:  
         j = -1  
         forward() # calling the forward function  
@@ -23,7 +24,8 @@ def backward():
   
     j = j - 1  
     try:  
-        img_label.config(image = image_list[j])  
+        img_label.config(image = image_list[j])
+        name_label.config(text = name_list[j])
     except:  
         j = 0  
         backward() # calling the forward function 
@@ -43,10 +45,13 @@ image_up = ImageTk.PhotoImage(Image.open("Images/Thumbs_Up.png").resize((500, 50
 image_ext = ImageTk.PhotoImage(Image.open("Images/Wrist_Extension.png").resize((500, 500)))
 image_flex = ImageTk.PhotoImage(Image.open("Images/Wrist_Flexion.png").resize((500, 500)))
 
-image_list = [image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]  
+image_list = [image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]
+name_list = ["No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
 j = 0  
 img_label = Label(root, image = image_list[j]) 
 img_label.grid(row=0, column=2)
+name_label = Label(root, text = name_list[j])
+name_label.grid(row=1, column=2)
 
 
 root.mainloop()
