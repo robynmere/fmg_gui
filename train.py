@@ -12,24 +12,29 @@ root = tk.Tk()
 root.title('FMG Wearable Training Module') #window title
 root.geometry('{}x{}'.format(1000,1000))
 
+# creating progress bar
+progressbar = ttk.Progressbar(maximum = 5)
+progressbar.grid(row = 14, column = 1, columnspan = 8)
+
 # creating countdown
 def countdown(count):       
     countLabel["text"] = count
 
-    if count < 6:
+    if count < 5:
         root.after(1000, countdown, count+1) #call countdown after 1000ms (1s)
+        progressbar.step(1)
+    elif count < 6:
+        root.after(1000, countdown, count+1)
+        progressbar.step(0.99)
     else:
         countDone = tk.Label(root, text = "Click 'Next'.")
         countDone.grid(row = 3, column = 5)
+        progressbar.stop()
 
 countLabel = tk.Label(root)
 countLabel.grid(row = 3, column = 5)
 countdown(1)
 
-# timer bar (i hope)
-progressbar = ttk.Progressbar()
-progressbar.grid(row = 14, column = 1, columnspan = 8) #place(x=30, y=60, width=200)
-progressbar.start(48)
 
 #creating input widgets and labels
 L1 = Label(root, text = "This is the training window")

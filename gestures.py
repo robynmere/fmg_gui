@@ -1,13 +1,22 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import ttk
 import sys
 import os
 from PIL import ImageTk, Image  
+
+# setting some variables
+time = 5 # number of seconds for each gesture
+
 
 # creating main window
 root = tk.Tk() 
 root.title('Machine Learning Gestures') 
 root.geometry('{}x{}'.format(1000,1000))
+
+# creating progress bar
+progressbar = ttk.Progressbar(maximum = time)
+progressbar.grid(row = 4, column = 2, columnspan = 8)
 
 # defining functions
 def forward():  
@@ -17,7 +26,7 @@ def forward():
         img_label.config(image = image_list[j])
         name_label.config(text = name_list[j])
         count_label = tk.Label(root)
-        countdown(5)
+        countdown(1)
     except:  
         j = -1  
         forward() # calling the forward function  
@@ -36,13 +45,17 @@ def backward():
 def countdown(count):       
     count_label["text"] = count
 
-    if count > 0:
-        root.after(1000, countdown, count-1) #call countdown after 1000ms (1s)
-    
-    if count > 0:
+    if count < time:
+        root.after(1000, countdown, count+1) #call countdown after 1000ms (1s)
+        progressbar.step(1)
+        countDone = tk.Label(root, text = "                   ")
+    elif count < time + 1:
+        root.after(1000, countdown, count+1)
+        progressbar.step(0.99)
         countDone = tk.Label(root, text = "                   ")
     else:
         countDone = tk.Label(root, text = "Click 'Next'.")
+        progressbar.stop()
     countDone.grid(row = 3, column = 2)
 
 # adding buttons
@@ -71,7 +84,7 @@ name_label = Label(root, text = name_list[j])
 
 # countdown
 count_label = tk.Label(root)
-countdown(5)
+countdown(1)
 
 # grid controls
 img_label.grid(row=0, column=2)
