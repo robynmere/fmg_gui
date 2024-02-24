@@ -16,15 +16,15 @@ root.geometry('{}x{}'.format(1000,1000))
 def countdown(count):       
     countLabel["text"] = count
 
-    if count > 0:
-        root.after(1000, countdown, count-1) #call countdown after 1000ms (1s)
+    if count < 6:
+        root.after(1000, countdown, count+1) #call countdown after 1000ms (1s)
     else:
         countDone = tk.Label(root, text = "Click 'Next'.")
         countDone.grid(row = 3, column = 5)
 
 countLabel = tk.Label(root)
 countLabel.grid(row = 3, column = 5)
-countdown(5)
+countdown(1)
 
 # timer bar (i hope)
 progressbar = ttk.Progressbar()
