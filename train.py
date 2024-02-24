@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from tkinter import *
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,6 +25,11 @@ def countdown(count):
 countLabel = tk.Label(root)
 countLabel.grid(row = 3, column = 5)
 countdown(5)
+
+# timer bar (i hope)
+progressbar = ttk.Progressbar()
+progressbar.grid(row = 14, column = 1, columnspan = 8) #place(x=30, y=60, width=200)
+progressbar.start(48)
 
 #creating input widgets and labels
 L1 = Label(root, text = "This is the training window")

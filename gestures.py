@@ -16,6 +16,8 @@ def forward():
     try:  
         img_label.config(image = image_list[j])
         name_label.config(text = name_list[j])
+        count_label = tk.Label(root)
+        countdown(5)
     except:  
         j = -1  
         forward() # calling the forward function  
@@ -23,11 +25,11 @@ def forward():
 def backward():  
     global j # creating a global variable j  
   
-    j = j - 1  
-    try:  
+    j = j - 1
+    try:
         img_label.config(image = image_list[j])
         name_label.config(text = name_list[j])
-    except:  
+    except:
         j = 0  
         backward() # calling the backward function 
 
@@ -37,9 +39,11 @@ def countdown(count):
     if count > 0:
         root.after(1000, countdown, count-1) #call countdown after 1000ms (1s)
     
+    if count > 0:
+        countDone = tk.Label(root, text = "                   ")
     else:
         countDone = tk.Label(root, text = "Click 'Next'.")
-        countDone.grid(row = 3, column = 5)
+    countDone.grid(row = 3, column = 2)
 
 # adding buttons
 back_button = Button(root, text = 'Back', command = backward)
