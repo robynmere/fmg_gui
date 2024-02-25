@@ -16,7 +16,7 @@ root.geometry('{}x{}'.format(1000,1000))
 
 # creating progress bar
 progressbar = ttk.Progressbar(maximum = time)
-progressbar.grid(row = 4, column = 2, columnspan = 8)
+progressbar.grid(row = 4, column = 0, columnspan = 8)
 
 # defining functions
 def forward():  
