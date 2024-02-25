@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 # creating main window
 root = tk.Tk() 
 root.title('Machine Learning Configuration') #window title
-root.geometry('{}x{}'.format(1000,600))
+root.geometry('{}x{}'.format(1000,650))
 
 
 # defining functions
@@ -15,7 +15,7 @@ def name_selection():
     spaces_label = Label(root, text = selection_spaces)
     spaces_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
     selected_names = ", ".join([name_listbox.get(i) for i in name_index])
-    selection_text = "You have selected the following gestures to train: " + selected_names
+    selection_text = "You have selected to train the following gestures: " + selected_names
     selection_label = Label(root, text = str(selection_text))
     selection_label.grid(row=8, column=0, sticky = "NW", columnspan = 10)
 
@@ -31,7 +31,7 @@ def sensor_selection():
     selection_spaces = "                                                                                                                                                                                                                                                     "
     spaces_label = Label(root, text = selection_spaces)
     spaces_label.grid(row = 7, column = 0, sticky = "NW", columnspan = 10)
-    selection_text = "You have selected to train the following sensors: " + selected_sensors
+    selection_text = "You have selected the following sensors: " + selected_sensors
     selection_label = Label(root, text = str(selection_text))
     selection_label.grid(row=7, column=0, sticky = "NW", columnspan = 10)
 
@@ -46,6 +46,7 @@ sensor_label = Label(root, text = "Please select which sensors to read (scroll f
 sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Accelerometer (IMU)","Gyroscope (IMU)"]
 sensor_items = tk.Variable(value = sensor_list)
 sensor_listbox = tk.Listbox(root, listvariable = sensor_items, height = 6, selectmode = tk.MULTIPLE)
+sensor_default_label = Label(root, text = "You have selected the following sensors: ")
 
 clear_button1 = Button(root, text = '        Clear All        ', command = sensor_clear)
 all_button1 = Button(root, text = '       Select All       ', command = sensor_all)
@@ -57,6 +58,7 @@ gesture_label = Label(root, text = "Please select all gestures to train (scroll 
 name_list = ["No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
 name_items = tk.Variable(value = name_list)
 name_listbox = tk.Listbox(root, listvariable = name_items, height = 6, selectmode = tk.MULTIPLE)
+name_default_label = Label(root, text = "You have selected to train the following gestures: ")
 
 clear_button2 = Button(root, text = '        Clear All        ', command = name_clear)
 all_button2 = Button(root, text = '       Select All       ', command = name_all)
@@ -89,10 +91,13 @@ clear_button2.grid(row=6, column=0, sticky="NW")
 all_button2.grid(row=6, column=1, sticky="NW")
 confirm_button2.grid(row=6, column=2, sticky="NW")
 
-image_label1.grid(row = 9, column = 0, sticky = "NW", columnspan = 4)
-image_label2.grid(row = 10, column = 0, sticky = "NW", columnspan = 4)
-image_label3.grid(row = 11, column = 0, sticky = "NW", columnspan = 4)
-image_label.grid(row = 12, column = 0, sticky = "NW", columnspan = 4)
+sensor_default_label.grid(row = 7, column = 0, sticky = "NW", columnspan = 10)
+name_default_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
+
+image_label1.grid(row = 9, column = 0, sticky = "NW", columnspan = 5)
+image_label2.grid(row = 10, column = 0, sticky = "NW", columnspan = 5)
+image_label3.grid(row = 11, column = 0, sticky = "NW", columnspan = 5)
+image_label.grid(row = 12, column = 0, sticky = "NW", columnspan = 5)
 
 
 root.mainloop()
