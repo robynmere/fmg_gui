@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+import os
 from PIL import ImageTk, Image
 
 # creating main window
@@ -41,6 +42,9 @@ def sensor_clear():
 def sensor_all():
     sensor_listbox.selection_set(0,len(sensor_list))
 
+def launch_training():
+    os.system('python3 gestures.py')
+
 # choosing which sensors to read
 sensor_label = Label(root, text = "Please select which sensors to read (scroll for full selection):")
 sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Accelerometer (IMU)","Gyroscope (IMU)"]
@@ -48,6 +52,7 @@ sensor_items = tk.Variable(value = sensor_list)
 sensor_listbox = tk.Listbox(root, listvariable = sensor_items, height = 6, selectmode = tk.MULTIPLE)
 sensor_default_label = Label(root, text = "You have selected the following sensors: ")
 
+# sensor buttons
 clear_button1 = Button(root, text = '        Clear All        ', command = sensor_clear)
 all_button1 = Button(root, text = '       Select All       ', command = sensor_all)
 confirm_button1 = Button(root, text = '  Confirm Selection  ', command = sensor_selection)
@@ -60,6 +65,7 @@ name_items = tk.Variable(value = name_list)
 name_listbox = tk.Listbox(root, listvariable = name_items, height = 6, selectmode = tk.MULTIPLE)
 name_default_label = Label(root, text = "You have selected to train the following gestures: ")
 
+# gesture buttons
 clear_button2 = Button(root, text = '        Clear All        ', command = name_clear)
 all_button2 = Button(root, text = '       Select All       ', command = name_all)
 confirm_button2 = Button(root, text = 'Confirm Selection', command = name_selection)
@@ -75,6 +81,9 @@ image_label3 = Label(root, text = image_text3)
 image_all = ImageTk.PhotoImage(Image.open("Images/All_Gestures.png").resize((400,200)))
 image_label = Label(root, image = image_all)
 
+# opening gestures.py via button
+opening_gestures = Button(root, text = "Launch Training", command = launch_training)
+opening_gestures.grid(row = 12, column = 5)
 
 #grid manager
 sensor_label.grid(row=0, column=0, sticky="NW", columnspan=2)
@@ -97,7 +106,7 @@ name_default_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
 image_label1.grid(row = 9, column = 0, sticky = "NW", columnspan = 5)
 image_label2.grid(row = 10, column = 0, sticky = "NW", columnspan = 5)
 image_label3.grid(row = 11, column = 0, sticky = "NW", columnspan = 5)
-image_label.grid(row = 12, column = 0, sticky = "NW", columnspan = 5)
+image_label.grid(row = 12, column = 0, sticky = "NW", columnspan = 3)
 
 
 root.mainloop()
