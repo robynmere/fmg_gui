@@ -77,7 +77,7 @@ image_ext = ImageTk.PhotoImage(Image.open("Images/Wrist_Extension.png").resize((
 image_flex = ImageTk.PhotoImage(Image.open("Images/Wrist_Flexion.png").resize((500, 500)))
 
 # listing images and their names
-intro_text = "Please perform the gesture shown on each page for 5 seconds each. The time is shown via progress bar below."
+intro_text = "Please perform the gesture shown on each page for 5 seconds each. The time will be shown via progress bar below."
 image_list = [image_header, image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]
 name_list = [intro_text, "No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
 j = 0
