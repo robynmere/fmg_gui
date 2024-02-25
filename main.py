@@ -17,20 +17,20 @@ root.title('FMG Wearable Device') #window title
 
 #functions 
 def start_rec(): 
-    exam = Label(root, text="       Recording has started.      ", bg="white")
-    exam.grid(row = 20, column = 0)
+    exam = Label(root, text="Recording has started.       ", bg="#ebecec")
+    exam.grid(row = 14, column = 0, sticky="W", columnspan=2)
 
 def stop_rec():
-    stopi = Label(root, text="Recording has been stopped.", bg="white")
-    stopi.grid(row=20, column=0)
+    stopi = Label(root, text="Recording has been stopped.       ", bg="#ebecec")
+    stopi.grid(row=14, column=0, sticky="W", columnspan=2)
 
 def start_graph(): 
-    exam = Label(root, text="       Graphing has started.     ", bg="white")
-    exam.grid(row = 20, column = 0)
+    exam = Label(root, text="Graphing has started.            ", bg="#ebecec")
+    exam.grid(row = 14, column = 0, sticky="W", columnspan=2)
 
 def stop_graph():
-    stopi = Label(root, text="Graphing has been stopped.", bg="white")
-    stopi.grid(row=20, column=0)
+    stopi = Label(root, text="Graphing has been stopped.        ", bg="#ebecec")
+    stopi.grid(row=14, column=0, sticky="W", columnspan=2)
 
 def launch_config():
     os.system('python3 user_config.py')
@@ -38,33 +38,48 @@ def launch_config():
 def user_enter():
     seconds = display_length.get()
     size = max_file.get()
-    number_fsrs=six_eight.get()
+    sensor_index = sensor_listbox.curselection()
+    selected_sensors = ",".join([sensor_listbox.get(i) for i in sensor_index])
+    selection_text = "You have selected to display the following sensors:" + selected_sensors
+    selection_label = Label(root, text = str(selection_text), bg="#ebecec")
+    selection_label.grid(row=14, column=0, sticky="W", columnspan=2)
 
 def connect_ble(): #sarah BLE initiation function goes here
-    connect_request = Label(root, text = "  BLE connection requested.   ", bg="white")
-    connect_request.grid(row=20, column=0)
+    connect_request = Label(root, text = "BLE connection requested.   ", bg="#ebecec")
+    connect_request.grid(row=14, column=0, sticky="W", columnspan=2)
+
+def sensor_clear():
+    sensor_listbox.selection_clear(0,len(sensor_list))
+
+def sensor_all():
+    sensor_listbox.selection_set(0,len(sensor_list))
+
 
 #graphing user inputs 
 graph_inputs_title = Label(root, text = "Graphing Options")
 
 display_length_label = Label(root, text = "Display length for graphs (s): ")
-display_length= Entry(root)
+display_length= Entry(root, width=10)
 
 max_file_label = Label(root, text = "Maximum file size for recording (MB): ")
-max_file = Entry(root)
+max_file = Entry(root, width=10)
 
-num_fsrs_opt = ['6', '8']
-num_fsrs = StringVar(root)
-num_fsrs.set('6')
-six_eight = OptionMenu(root, num_fsrs, *num_fsrs_opt)
-six_eight_label= Label(root, text="Select the number of FSRs in use:")
+sensor_label = Label(root, text = "Please select which sensors to graph (scroll for full selection):")
+sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Gyroscope (IMU)", "Accelerometer (IMU)"]
+sensor_items = tk.Variable(value = sensor_list)
+sensor_listbox = tk.Listbox(root, listvariable = sensor_items, height = 6, selectmode = tk.MULTIPLE)
 
-enter_button = Button(root, text = 'Enter', command = user_enter)
+clear_button1 = Button(root, text = 'Clear All', command = sensor_clear)
+all_button1 = Button(root, text = 'Select All', command = sensor_all)
 
-#message board 
+enter_button = Button(root, text = 'Confirm Graphing Parameters', command = user_enter)
+
+#labels
 message_label = Label(root, text="Messages:")
+line_label1 = Label(root, text ="_________________________________________")
+line_label2 = Label(root, text ="_________________________________________")
 
-#other buttons
+#graphing buttons
 training_mode = Button(root, text = "Launch Gestural Control", command = launch_config)
 
 ble = Button(root, text="Initiate BLE Connection", command = connect_ble)
@@ -138,23 +153,37 @@ accel_toolbarFrame.grid(row=10,column=6, sticky="SE")
 accel_toolbar = NavigationToolbar2Tk(accel_canvas, accel_toolbarFrame)
 
 
-#grid manager
+#grid layout manager
 graph_inputs_title.grid(row=0, column=0, columnspan=3, sticky="N")
 display_length_label.grid(row=1, column=0, sticky="NW")
 display_length.grid(row=1, column=1, sticky="NW")
 max_file_label.grid(row = 2, column = 0, sticky="NW")
 max_file.grid(row = 2, column = 1, sticky="NW")
-six_eight_label.grid(row=3, column=0, sticky="NW")
-six_eight.grid(row=3, column=1, sticky="NW")
-enter_button.grid(row=4, column=2)
+sensor_label.grid(row=3, column=0, columnspan=2, sticky="W")
+sensor_listbox.grid(row=4, column=0, sticky="NW")
+sensor_listbox.configure(width=30)
+clear_button1.grid(row=5, column=0, sticky="NW")
+clear_button1.configure(width=10)
+all_button1.grid(row=5, column=0, sticky="NE")
+all_button1.configure(width=10)
+enter_button.grid(row=6, column=0, columnspan=2)
+enter_button.configure(width=20)
 
-training_mode.grid(row = 7, column = 0, sticky = "NS")
-start_record.grid(row = 12, column = 0)
-stop_record.grid(row=13, column=0)
-start_gr.grid(row = 10, column = 0)
-stop_gr.grid(row=11, column=0)
-ble.grid(row=14, column=0)
-message_label.grid(row=19, column=0, sticky = "NW")
+line_label1.grid(row=7, column=0, columnspan=2)
 
+start_record.grid(row = 8, column = 0, sticky="W")
+start_record.configure(width=10)
+stop_record.grid(row=8, column=0, sticky="E")
+stop_record.configure(width=10)
+start_gr.grid(row = 9, column = 0, sticky="W")
+start_gr.configure(width=10)
+stop_gr.grid(row=9, column=0, sticky="E")
+stop_gr.configure(width=10)
+ble.grid(row=10, column=0, sticky="W")
+training_mode.grid(row = 11, column = 0, sticky = "NS")
+
+line_label2.grid(row=12, column=0, columnspan=2)
+
+message_label.grid(row=13, column=0, sticky = "NW")
 
 root.mainloop()
