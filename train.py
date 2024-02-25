@@ -7,23 +7,26 @@ from matplotlib.backends.backend_tkagg import(FigureCanvasTkAgg, NavigationToolb
 import sys
 import os
 
+# setting some variables
+time = 5 # number of seconds for each gesture
+
 # creating main window
 root = tk.Tk() 
 root.title('FMG Wearable Training Module') #window title
 root.geometry('{}x{}'.format(1000,1000))
 
 # creating progress bar
-progressbar = ttk.Progressbar(maximum = 5)
+progressbar = ttk.Progressbar(maximum = time)
 progressbar.grid(row = 14, column = 1, columnspan = 8)
 
 # creating countdown
 def countdown(count):       
     countLabel["text"] = count
 
-    if count < 5:
+    if count < time:
         root.after(1000, countdown, count+1) #call countdown after 1000ms (1s)
         progressbar.step(1)
-    elif count < 6:
+    elif count < time + 1:
         root.after(1000, countdown, count+1)
         progressbar.step(0.99)
     else:

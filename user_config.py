@@ -10,6 +10,7 @@ import os
 # input from main.py - NEED TO CHANGE TO READ FROM main.py
 number_fsrs = 8
 
+
 # creating main window
 root = tk.Tk() 
 root.title('Machine Learning Configuration') #window title
