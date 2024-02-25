@@ -8,19 +8,12 @@ import sys
 import os
 
 # input from main.py - NEED TO CHANGE TO READ FROM main.py
-number_fsrs = 6
+number_fsrs = 8
 
 # creating main window
 root = tk.Tk() 
 root.title('Machine Learning Configuration') #window title
 #root.geometry('{}x{}'.format(800,500))
-
-# defining functions
-def clear_all(listbox,list):
-    listbox.selection_clear(0,len(list))
-
-def select_all(listbox,list):
-    listbox.selection_set(0,len(list))
 
 
 # choosing which sensors to read
@@ -43,13 +36,17 @@ def sensor_selection():
     selection_label = Label(root, text = str(selection_text))
     selection_label.pack(expand = True, side = tk.TOP)
 
-'''
-clear_button1 = Button(root, text = 'Clear All', command = clear_all(sensor_listbox,sensor_list))
+def sensor_clear():
+    sensor_listbox.selection_clear(0,len(sensor_list))
+
+def sensor_all():
+    sensor_listbox.selection_set(0,len(sensor_list))
+
+clear_button1 = Button(root, text = '        Clear All        ', command = sensor_clear)
 clear_button1.pack(expand = True)
 
-all_button1 = Button(root, text = 'Select All', command = select_all(sensor_listbox,sensor_list))
-all_button1.pack(expand = False)
-'''
+all_button1 = Button(root, text = '       Select All       ', command = sensor_all)
+all_button1.pack(expand = True)
 
 confirm_button1 = Button(root, text = '  Confirm Selection  ', command = sensor_selection)
 confirm_button1.pack(expand = True)
@@ -71,14 +68,20 @@ def name_selection():
     selection_label = Label(root, text = str(selection_text))
     selection_label.pack(expand = True, side = tk.BOTTOM)
 
-# buttons
-confirm_button2 = Button(root, text = '  Confirm Selection  ', command = name_selection)
+def name_clear():
+    name_listbox.selection_clear(0,len(name_list))
+
+def name_all():
+    name_listbox.selection_set(0,len(name_list))
+
+clear_button2 = Button(root, text = '        Clear All        ', command = name_clear)
+clear_button2.pack(expand = True)
+
+all_button2 = Button(root, text = '       Select All       ', command = name_all)
+all_button2.pack(expand = True)
+
+confirm_button2 = Button(root, text = 'Confirm Selection', command = name_selection)
 confirm_button2.pack(expand = True, side = tk.TOP)
 
-'''
-# other
-j = 0
-name_label = Label(root, text = name_list[j])
-'''
 
 root.mainloop()
