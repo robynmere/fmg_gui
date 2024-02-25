@@ -1,17 +1,23 @@
 import tkinter as tk
 from tkinter import *
+from PIL import ImageTk, Image
 
 # creating main window
 root = tk.Tk() 
 root.title('Machine Learning Configuration') #window title
-root.geometry('{}x{}'.format(800,500))
+root.geometry('{}x{}'.format(1000,600))
 
+
+# defining functions
 def name_selection():
     name_index = name_listbox.curselection()
+    selection_spaces = "                                                                                                                                                                                                                                                                            "
+    spaces_label = Label(root, text = selection_spaces)
+    spaces_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
     selected_names = ", ".join([name_listbox.get(i) for i in name_index])
     selection_text = "You have selected the following gestures to train: " + selected_names
     selection_label = Label(root, text = str(selection_text))
-    selection_label.grid(row=10, column=0)
+    selection_label.grid(row=8, column=0, sticky = "NW", columnspan = 10)
 
 def name_clear():
     name_listbox.selection_clear(0,len(name_list))
@@ -21,10 +27,13 @@ def name_all():
 
 def sensor_selection():
     sensor_index = sensor_listbox.curselection()
-    selected_sensors = ",".join([sensor_listbox.get(i) for i in sensor_index])
-    selection_text = "You have selected to train the following sensors:" + selected_sensors
+    selected_sensors = ", ".join([sensor_listbox.get(i) for i in sensor_index])
+    selection_spaces = "                                                                                                                                                                                                                                                     "
+    spaces_label = Label(root, text = selection_spaces)
+    spaces_label.grid(row = 7, column = 0, sticky = "NW", columnspan = 10)
+    selection_text = "You have selected to train the following sensors: " + selected_sensors
     selection_label = Label(root, text = str(selection_text))
-    selection_label.grid(row=10, column=0)
+    selection_label.grid(row=7, column=0, sticky = "NW", columnspan = 10)
 
 def sensor_clear():
     sensor_listbox.selection_clear(0,len(sensor_list))
@@ -34,7 +43,7 @@ def sensor_all():
 
 # choosing which sensors to read
 sensor_label = Label(root, text = "Please select which sensors to read (scroll for full selection):")
-sensor_list = [" 1"," 2"," 3"," 4"," 5"," 6"," 7"," 8"," Inertial measurement unit (IMU)"]
+sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Accelerometer (IMU)","Gyroscope (IMU)"]
 sensor_items = tk.Variable(value = sensor_list)
 sensor_listbox = tk.Listbox(root, listvariable = sensor_items, height = 6, selectmode = tk.MULTIPLE)
 
@@ -54,6 +63,17 @@ all_button2 = Button(root, text = '       Select All       ', command = name_all
 confirm_button2 = Button(root, text = 'Confirm Selection', command = name_selection)
 
 
+# adding gesture guide
+image_text1 = "The following image represents the gestures that may be trained by the user."
+image_text2 = "The gesture names are included in the selection menu, listing the top images from left to right and then the bottom images."
+image_text3 = "It is suggested that users select 'No Motion' as one of their trained gestures."
+image_label1 = Label(root, text = image_text1)
+image_label2 = Label(root, text = image_text2)
+image_label3 = Label(root, text = image_text3)
+image_all = ImageTk.PhotoImage(Image.open("Images/All_Gestures.png").resize((400,200)))
+image_label = Label(root, image = image_all)
+
+
 #grid manager
 sensor_label.grid(row=0, column=0, sticky="NW", columnspan=2)
 sensor_listbox.grid(row=1, column=0, sticky="NW", columnspan=3)
@@ -68,5 +88,11 @@ name_listbox.configure(width=20)
 clear_button2.grid(row=6, column=0, sticky="NW")
 all_button2.grid(row=6, column=1, sticky="NW")
 confirm_button2.grid(row=6, column=2, sticky="NW")
+
+image_label1.grid(row = 9, column = 0, sticky = "NW", columnspan = 4)
+image_label2.grid(row = 10, column = 0, sticky = "NW", columnspan = 4)
+image_label3.grid(row = 11, column = 0, sticky = "NW", columnspan = 4)
+image_label.grid(row = 12, column = 0, sticky = "NW", columnspan = 4)
+
 
 root.mainloop()
