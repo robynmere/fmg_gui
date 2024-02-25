@@ -66,6 +66,7 @@ forward_button = Button(root, text = 'Next', command = forward)
 forward_button.grid(row=0, column = 3)
   
 # images
+image_header = ImageTk.PhotoImage(Image.open("Images/Training_Header.png").resize((500, 175)))
 image_no = ImageTk.PhotoImage(Image.open("Images/No_Motion.png").resize((500, 500)))
 image_chuck = ImageTk.PhotoImage(Image.open("Images/Chuck_Grip.png").resize((500, 500)))
 image_open = ImageTk.PhotoImage(Image.open("Images/Hand_Open.png").resize((500, 500)))
@@ -76,9 +77,10 @@ image_ext = ImageTk.PhotoImage(Image.open("Images/Wrist_Extension.png").resize((
 image_flex = ImageTk.PhotoImage(Image.open("Images/Wrist_Flexion.png").resize((500, 500)))
 
 # listing images and their names
-image_list = [image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]
-name_list = ["No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
-j = 0  
+intro_text = "Please perform the gesture shown on each page for 5 seconds each. The time is shown via progress bar below."
+image_list = [image_header, image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]
+name_list = [intro_text, "No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
+j = 0
 img_label = Label(root, image = image_list[j])
 name_label = Label(root, text = name_list[j])
 
