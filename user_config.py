@@ -14,11 +14,11 @@ def name_selection():
     name_index = name_listbox.curselection()
     selection_spaces = "                                                                                                                                                                                                                                                                            "
     spaces_label = Label(root, text = selection_spaces)
-    spaces_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
+    spaces_label.grid(row = 9, column = 0, sticky = "NW", columnspan = 10)
     selected_names = ", ".join([name_listbox.get(i) for i in name_index])
     selection_text = "You have selected to train the following gestures: " + selected_names
     selection_label = Label(root, text = str(selection_text))
-    selection_label.grid(row=8, column=0, sticky = "NW", columnspan = 10)
+    selection_label.grid(row=9, column=0, sticky = "NW", columnspan = 10)
 
 def name_clear():
     name_listbox.selection_clear(0,len(name_list))
@@ -31,10 +31,10 @@ def sensor_selection():
     selected_sensors = ", ".join([sensor_listbox.get(i) for i in sensor_index])
     selection_spaces = "                                                                                                                                                                                                                                                     "
     spaces_label = Label(root, text = selection_spaces)
-    spaces_label.grid(row = 7, column = 0, sticky = "NW", columnspan = 10)
+    spaces_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
     selection_text = "You have selected the following sensors: " + selected_sensors
     selection_label = Label(root, text = str(selection_text))
-    selection_label.grid(row=7, column=0, sticky = "NW", columnspan = 10)
+    selection_label.grid(row=8, column=0, sticky = "NW", columnspan = 10)
 
 def sensor_clear():
     sensor_listbox.selection_clear(0,len(sensor_list))
@@ -45,9 +45,22 @@ def sensor_all():
 def launch_training():
     os.system('python3 gestures.py')
 
+
+# number of sensors dropdown menu
+options = [6, 8]
+chosen_option = IntVar()
+chosen_option.set(6)
+drop = OptionMenu(root , chosen_option, *options)
+option_label = Label(root, text = "Select the number of FSRS being used:")
+num_fsrs = chosen_option.get()
+
+
 # choosing which sensors to read
-sensor_label = Label(root, text = "Please select which sensors to read (scroll for full selection):")
-sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Accelerometer (IMU)","Gyroscope (IMU)"]
+sensor_label = Label(root, text = "Select which sensors to read (scroll for full selection):")
+if num_fsrs == 6:
+    sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","Accelerometer (IMU)","Gyroscope (IMU)"]
+else:
+    sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Accelerometer (IMU)","Gyroscope (IMU)"]
 sensor_items = tk.Variable(value = sensor_list)
 sensor_listbox = tk.Listbox(root, listvariable = sensor_items, height = 6, selectmode = tk.MULTIPLE)
 sensor_default_label = Label(root, text = "You have selected the following sensors: ")
@@ -59,7 +72,7 @@ confirm_button1 = Button(root, text = '  Confirm Selection  ', command = sensor_
 
 
 # choosing gestures
-gesture_label = Label(root, text = "Please select all gestures to train (scroll for full selection):")
+gesture_label = Label(root, text = "Select all gestures to train (scroll for full selection):")
 name_list = ["No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
 name_items = tk.Variable(value = name_list)
 name_listbox = tk.Listbox(root, listvariable = name_items, height = 6, selectmode = tk.MULTIPLE)
@@ -86,27 +99,30 @@ opening_gestures = Button(root, text = "Launch Training", command = launch_train
 opening_gestures.grid(row = 12, column = 5)
 
 #grid manager
-sensor_label.grid(row=0, column=0, sticky="NW", columnspan=2)
-sensor_listbox.grid(row=1, column=0, sticky="NW", columnspan=3)
+option_label.grid(row = 0, column = 0, sticky = "NW")
+drop.grid(row = 0, column = 1, sticky = "NW")
+
+sensor_label.grid(row=1, column=0, sticky="NW", columnspan=2)
+sensor_listbox.grid(row=2, column=0, sticky="NW", columnspan=3)
 sensor_listbox.configure(width=20)
-clear_button1.grid(row=2, column=0, sticky="NW")
-all_button1.grid(row=2, column=1, sticky="NW")
-confirm_button1.grid(row=2, column=2, sticky="NW")
+clear_button1.grid(row=3, column=0, sticky="NW")
+all_button1.grid(row=3, column=1, sticky="NW")
+confirm_button1.grid(row=3, column=2, sticky="NW")
 
-gesture_label.grid(row=4, column=0, sticky="NW", columnspan=2)
-name_listbox.grid(row=5, column=0, sticky="NW", columnspan=3)
+gesture_label.grid(row=5, column=0, sticky="NW", columnspan=2)
+name_listbox.grid(row=6, column=0, sticky="NW", columnspan=3)
 name_listbox.configure(width=20)
-clear_button2.grid(row=6, column=0, sticky="NW")
-all_button2.grid(row=6, column=1, sticky="NW")
-confirm_button2.grid(row=6, column=2, sticky="NW")
+clear_button2.grid(row=7, column=0, sticky="NW")
+all_button2.grid(row=7, column=1, sticky="NW")
+confirm_button2.grid(row=7, column=2, sticky="NW")
 
-sensor_default_label.grid(row = 7, column = 0, sticky = "NW", columnspan = 10)
-name_default_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
+sensor_default_label.grid(row = 8, column = 0, sticky = "NW", columnspan = 10)
+name_default_label.grid(row = 9, column = 0, sticky = "NW", columnspan = 10)
 
-image_label1.grid(row = 9, column = 0, sticky = "NW", columnspan = 5)
-image_label2.grid(row = 10, column = 0, sticky = "NW", columnspan = 5)
-image_label3.grid(row = 11, column = 0, sticky = "NW", columnspan = 5)
-image_label.grid(row = 12, column = 0, sticky = "NW", columnspan = 3)
+image_label1.grid(row = 10, column = 0, sticky = "NW", columnspan = 5)
+image_label2.grid(row = 11, column = 0, sticky = "NW", columnspan = 5)
+image_label3.grid(row = 12, column = 0, sticky = "NW", columnspan = 5)
+image_label.grid(row = 13, column = 0, sticky = "NW", columnspan = 3)
 
 
 root.mainloop()

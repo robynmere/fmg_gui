@@ -6,7 +6,7 @@ import os
 from PIL import ImageTk, Image  
 
 # closing user_config.py (i hope)
-user_config.py.close
+# user_config.py.close
 
 # setting some variables
 time = 5 # number of seconds for each gesture
