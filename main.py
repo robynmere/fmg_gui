@@ -11,6 +11,8 @@ import matplotlib.animation as animation
 import asyncio
 from bleak import BleakClient
 from bleak.backends.characteristic import BleakGATTCharacteristic
+import csv
+import time
 
 
 #creating main window
@@ -78,6 +80,15 @@ def notification_handler(sender: BleakGATTCharacteristic, data: bytearray):
 
     for number in dataString:
         print(int(number))
+
+    # code to write to an excel file
+    try:
+        with open("data.csv", "a", ) as file:
+            writer = csv.writer(file)
+            for number in dataString:
+                writer.writerow([time.time(), number])
+    except:
+        print("Could not write to CSV")
 
 def sensor_clear():
     sensor_listbox.selection_clear(0,len(sensor_list))
