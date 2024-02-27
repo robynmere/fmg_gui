@@ -1,14 +1,14 @@
-import tkinter as tk
 from tkinter import *
-import matplotlib.pyplot as plt
+import tkinter as tk
 import numpy as np
 from matplotlib.backends.backend_tkagg import(FigureCanvasTkAgg, NavigationToolbar2Tk)
 import sys
 import os
 import matplotlib
 from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from matplotlib import style
+
 
 #creating main window
 root = tk.Tk() 
