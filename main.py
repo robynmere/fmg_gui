@@ -8,6 +8,9 @@ import matplotlib
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import asyncio
+from bleak import BleakClient
+from bleak.backends.characteristic import BleakGATTCharacteristic
 
 
 #creating main window
@@ -33,7 +36,8 @@ def stop_graph():
     stopi.grid(row=14, column=0, sticky="W", columnspan=2)
 
 def launch_config():
-    os.system('python3 user_config.py')
+    #os.system('python3 user_config.py') # for mac users
+    os.system('python user_config.py') # for windows users
 
 def user_enter():
     seconds = display_length.get()
@@ -44,15 +48,45 @@ def user_enter():
     selection_label = Label(root, text = str(selection_text), bg="#ebecec")
     selection_label.grid(row=14, column=0, sticky="W", columnspan=2)
 
-def connect_ble(): #sarah BLE initiation function goes here
+async def connect_ble(): #sarah BLE initiation function goes here
     connect_request = Label(root, text = "BLE connection requested.   ", bg="#ebecec")
     connect_request.grid(row=14, column=0, sticky="W", columnspan=2)
+
+    async with BleakClient("AC:67:B2:D5:44:96") as client:
+        status = client.is_connected
+        print(bool(status)) # check to make sure it's connected!
+
+        for service in client.services:
+            for char in service.characteristics:
+                if "notify" in char.properties:
+                    try:
+                        value = bytes(await client.read_gatt_char(char.uuid))
+                        print(char.uuid)
+                        await client.start_notify(char.uuid, notification_handler) # set up notify characteristics
+                    except Exception as e:
+                        value = str(e).encode()
+                else:
+                    value = None
+                
+                print(value)
+
+        start_plotting()
+
+def notification_handler(sender: BleakGATTCharacteristic, data: bytearray):
+    print(f"{sender}: {data}")
+    dataString = data.decode('ASCII')
+
+    for number in dataString:
+        print(int(number))
 
 def sensor_clear():
     sensor_listbox.selection_clear(0,len(sensor_list))
 
 def sensor_all():
     sensor_listbox.selection_set(0,len(sensor_list))
+
+def start_plotting():
+    print("plotting now:)")
 
 
 #graphing user inputs 
