@@ -97,6 +97,11 @@ def sensor_all():
     sensor_listbox.selection_set(0,len(sensor_list))
 
 def start_plotting():
+    # going to make a try, except case. The try case will check if
+    # the excel sheet has been made and plot the data using global
+    # variable or data in the excel sheet. If the excel sheet has not
+    # been created, this will be handled by the except case which 
+    # will only plot zeros until data is put into the excel sheet.
     print("plotting now:)")
 
 
