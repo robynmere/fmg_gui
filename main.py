@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 import tkinter as tk
 import numpy as np
 from matplotlib.backends.backend_tkagg import(FigureCanvasTkAgg, NavigationToolbar2Tk)
@@ -19,23 +20,30 @@ import time
 root = tk.Tk() 
 root.title('FMG Wearable Device') #window title
 #root.geometry('{}x{}'.format(1800,1600))
+root.resizable(True, True)
+
+# grid layout
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+sizegrip = ttk.Sizegrip(root)
+sizegrip.grid(row=20, column=20, sticky=tk.SE)
 
 #functions 
 def start_rec(): 
-    exam = Label(root, text="Recording has started.       ", bg="#ebecec")
-    exam.grid(row = 14, column = 0, sticky="W", columnspan=2)
+    exam = Label(root, text="Recording has started.                        ", bg="#ebecec")
+    exam.grid(row = 14, column = 0, sticky="W", columnspan=2, padx=4)
 
 def stop_rec():
-    stopi = Label(root, text="Recording has been stopped.       ", bg="#ebecec")
-    stopi.grid(row=14, column=0, sticky="W", columnspan=2)
+    stopi = Label(root, text="Recording has been stopped.                        ", bg="#ebecec")
+    stopi.grid(row=14, column=0, sticky="W", columnspan=2, padx=4)
 
 def start_graph(): 
-    exam = Label(root, text="Graphing has started.            ", bg="#ebecec")
-    exam.grid(row = 14, column = 0, sticky="W", columnspan=2)
+    exam = Label(root, text="Graphing has started.                              ", bg="#ebecec")
+    exam.grid(row = 14, column = 0, sticky="W", columnspan=2, padx=4)
 
 def stop_graph():
-    stopi = Label(root, text="Graphing has been stopped.        ", bg="#ebecec")
-    stopi.grid(row=14, column=0, sticky="W", columnspan=2)
+    stopi = Label(root, text="Graphing has been stopped.                            ", bg="#ebecec")
+    stopi.grid(row=14, column=0, sticky="W", columnspan=2, padx=4)
 
 def launch_config():
     #os.system('python3 user_config.py') # for mac users
@@ -46,13 +54,13 @@ def user_enter():
     size = max_file.get()
     sensor_index = sensor_listbox.curselection()
     selected_sensors = ",".join([sensor_listbox.get(i) for i in sensor_index])
-    selection_text = "You have selected to display the following sensors:" + selected_sensors
-    selection_label = Label(root, text = str(selection_text), bg="#ebecec")
-    selection_label.grid(row=14, column=0, sticky="W", columnspan=2)
+    selection_text = "Displaying " + selected_sensors
+    selection_label = Label(root, text = str(selection_text), bg="#ebecec", wraplength=300)
+    selection_label.grid(row=15, column=0, sticky="W", columnspan=2, padx=4)
 
 async def connect_ble(): #sarah BLE initiation function goes here
     connect_request = Label(root, text = "BLE connection requested.   ", bg="#ebecec")
-    connect_request.grid(row=14, column=0, sticky="W", columnspan=2)
+    connect_request.grid(row=14, column=0, sticky="W", columnspan=2, padx=4)
 
     async with BleakClient("AC:67:B2:D5:44:96") as client:
         status = client.is_connected
@@ -155,7 +163,7 @@ plt.title("Force Sensors", fontsize=6)
 
 force_canvas = FigureCanvasTkAgg(force_fig, master=root)
 force_canvas.draw()
-force_canvas.get_tk_widget().grid(row=0, column=5, columnspan=2, rowspan=10, sticky="NW")
+force_canvas.get_tk_widget().grid(row=0, column=5, columnspan=2, rowspan=10, sticky="NW", pady=4)
 
 
 force_toolbarFrame = tk.Frame(master=root)
@@ -205,16 +213,16 @@ accel_toolbar = NavigationToolbar2Tk(accel_canvas, accel_toolbarFrame)
 
 #grid layout manager
 graph_inputs_title.grid(row=0, column=0, columnspan=3, sticky="N")
-display_length_label.grid(row=1, column=0, sticky="NW")
-display_length.grid(row=1, column=1, sticky="NW")
-max_file_label.grid(row = 2, column = 0, sticky="NW")
-max_file.grid(row = 2, column = 1, sticky="NW")
-sensor_label.grid(row=3, column=0, columnspan=2, sticky="W")
-sensor_listbox.grid(row=4, column=0, sticky="NW")
+display_length_label.grid(row=1, column=0, columnspan=2, sticky="NW", padx=4)
+display_length.grid(row=1, column=2, sticky="NW")
+max_file_label.grid(row = 2, column = 0, columnspan=2, sticky="NW", padx=4)
+max_file.grid(row = 2, column = 2, sticky="NW")
+sensor_label.grid(row=3, column=0, columnspan=3, sticky="W", padx=4)
+sensor_listbox.grid(row=4, column=0, sticky="NW", padx=5)
 sensor_listbox.configure(width=30)
 clear_button1.grid(row=5, column=0, sticky="NW")
 clear_button1.configure(width=10)
-all_button1.grid(row=5, column=0, sticky="NE")
+all_button1.grid(row=5, column=1, sticky="NE")
 all_button1.configure(width=10)
 enter_button.grid(row=6, column=0, columnspan=2)
 enter_button.configure(width=20)
@@ -223,11 +231,11 @@ line_label1.grid(row=7, column=0, columnspan=2)
 
 start_record.grid(row = 8, column = 0, sticky="W")
 start_record.configure(width=10)
-stop_record.grid(row=8, column=0, sticky="E")
+stop_record.grid(row=8, column=1, sticky="W")
 stop_record.configure(width=10)
 start_gr.grid(row = 9, column = 0, sticky="W")
 start_gr.configure(width=10)
-stop_gr.grid(row=9, column=0, sticky="E")
+stop_gr.grid(row=9, column=1, sticky="W")
 stop_gr.configure(width=10)
 ble.grid(row=10, column=0, sticky="W")
 training_mode.grid(row = 11, column = 0, sticky = "NS")
