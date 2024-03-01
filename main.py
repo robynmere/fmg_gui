@@ -46,8 +46,8 @@ def stop_graph():
     stopi.grid(row=14, column=0, sticky="W", columnspan=2, padx=4)
 
 def launch_config():
-    #os.system('python3 user_config.py') # for mac users
-    os.system('python user_config.py') # for windows users
+    os.system('python3 user_config.py') # for mac users
+    #os.system('python user_config.py') # for windows users
 
 def user_enter():
     seconds = display_length.get()

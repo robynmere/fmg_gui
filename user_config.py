@@ -43,8 +43,8 @@ def sensor_all():
     sensor_listbox.selection_set(0,len(sensor_list))
 
 def launch_training():
-    #os.system('python3 gestures.py') # for mac users
-    os.system('python gestures.py') # for windows users
+    os.system('python3 gestures.py') # for mac users
+    #os.system('python gestures.py') # for windows users
 
 
 # number of sensors dropdown menu
