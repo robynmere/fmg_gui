@@ -85,7 +85,7 @@ image_label = Label(root, image = image_all)
 
 # opening gestures.py via button
 opening_gestures = Button(root, text = "Launch Training", command = launch_training)
-opening_gestures.grid(row = 12, column = 5)
+opening_gestures.grid(row = 12, column = 6)
 
 #grid manager
 sensor_label.grid(row=1, column=0, sticky="NW", columnspan=2)
