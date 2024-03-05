@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import ttk
 import os
 from PIL import ImageTk, Image
 
@@ -7,7 +8,6 @@ from PIL import ImageTk, Image
 root = tk.Tk() 
 root.title('Machine Learning Configuration') #window title
 root.geometry('{}x{}'.format(1000,650))
-
 
 # defining functions
 def name_selection():
@@ -43,25 +43,13 @@ def sensor_all():
     sensor_listbox.selection_set(0,len(sensor_list))
 
 def launch_training():
-    #os.system('python3 gestures.py') # for mac users
-    os.system('python gestures.py') # for windows users
-
-
-# number of sensors dropdown menu
-options = [6, 8]
-chosen_option = IntVar()
-chosen_option.set(6)
-drop = OptionMenu(root , chosen_option, *options)
-option_label = Label(root, text = "Select the number of FSRS being used:")
-num_fsrs = chosen_option.get()
+    os.system('python3 gestures.py') # for mac users
+    #os.system('python gestures.py') # for windows users
 
 
 # choosing which sensors to read
 sensor_label = Label(root, text = "Select which sensors to read (scroll for full selection):")
-if num_fsrs == 6:
-    sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","Accelerometer (IMU)","Gyroscope (IMU)"]
-else:
-    sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Accelerometer (IMU)","Gyroscope (IMU)"]
+sensor_list = ["FSR 1","FSR 2","FSR 3","FSR 4","FSR 5","FSR 6","FSR 7","FSR 8","Accelerometer (IMU)","Gyroscope (IMU)"]
 sensor_items = tk.Variable(value = sensor_list)
 sensor_listbox = tk.Listbox(root, listvariable = sensor_items, height = 6, selectmode = tk.MULTIPLE)
 sensor_default_label = Label(root, text = "You have selected the following sensors: ")
@@ -100,9 +88,6 @@ opening_gestures = Button(root, text = "Launch Training", command = launch_train
 opening_gestures.grid(row = 12, column = 5)
 
 #grid manager
-option_label.grid(row = 0, column = 0, sticky = "NW")
-drop.grid(row = 0, column = 1, sticky = "NW")
-
 sensor_label.grid(row=1, column=0, sticky="NW", columnspan=2)
 sensor_listbox.grid(row=2, column=0, sticky="NW", columnspan=3)
 sensor_listbox.configure(width=20)
