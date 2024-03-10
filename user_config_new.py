@@ -36,6 +36,40 @@ def all_sensors(sender, value, user_data):
         dpg.set_value(user_data[m], sensor_true[m])
         m += 1
 
+def gesture_selection(sender, value, user_data):
+    gesture_clicked = [False, False, False, False, False, False, False, False]
+    
+    k = 0
+    while k < 8:
+        gesture_clicked[k] = dpg.get_value(gesture_tags[k])
+        k += 1
+
+    indices = [t for t in range(len(gesture_clicked)) if gesture_clicked[t] == True]
+    gestures_selected = []
+
+    p = 0
+    while p < len(indices):
+        gestures_selected.append(gesture_labels[indices[p]])
+        p += 1
+
+    dpg.set_value(user_data,f"You have selected the following gestures: " + ", ".join(gestures_selected))
+
+def clear_gestures(sender, value, user_data):
+    gesture_false = [False, False, False, False, False, False, False, False]
+    
+    h = 0
+    while h < 8:
+        dpg.set_value(user_data[h], gesture_false[h])
+        h += 1
+
+def all_gestures(sender, value, user_data):
+    gesture_true = [True, True, True, True, True, True, True, True]
+
+    m = 0
+    while m < 8:
+        dpg.set_value(user_data[m], gesture_true[m])
+        m += 1
+
 with dpg.window(tag = "Primary Window"):
     dpg.add_text("Welcome to the user configuration window. Please follow the directions below to set up. ")
 
@@ -53,10 +87,11 @@ with dpg.window(tag = "Primary Window"):
     sensor_menu[8] = dpg.add_menu_item(tag = "accel", label = "Accelerometer (IMU)", check = True)
     sensor_menu[9] = dpg.add_menu_item(tag = "gyro", label = "Gyroscope (IMU)", check = True)
     
-    dpg.add_button(label = "Clear selection", callback = clear_sensors, user_data = sensor_menu)
-    dpg.add_button(label = "Select all", callback = all_sensors, user_data = sensor_menu)
+    dpg.add_button(label = "Clear selection", callback = clear_sensors, user_data = sensor_menu, pos = [240,224])
+    dpg.add_button(label = "Select all", callback = all_sensors, user_data = sensor_menu, pos = [150,224])
     text_sensor = dpg.add_text("You have selected the following sensors: ")
     dpg.add_button(label = "Confirm selection", before = text_sensor, callback = sensor_selection, user_data = text_sensor)
+    dpg.add_text(" ")
 
     # Gesture selection
     dpg.add_text("Select all gestures to train:")
@@ -70,12 +105,12 @@ with dpg.window(tag = "Primary Window"):
         gesture_menu[q - 1] = dpg.add_menu_item(tag = "G" + str(q), label = gesture_labels[q - 1], check = True)
         q += 1
     
-    #dpg.add_button(label = "Clear selection", callback = clear_gestures, user_data = gesture_menu)
-    #dpg.add_button(label = "Select all", callback = all_gestures, user_data = gesture_menu)
+    dpg.add_button(label = "Clear selection", callback = clear_gestures, user_data = gesture_menu, pos = [240,452])
+    dpg.add_button(label = "Select all", callback = all_gestures, user_data = gesture_menu, pos = [150,452])
     text_gesture = dpg.add_text("You have selected the following gestures: ")
-    #dpg.add_button(label = "Confirm selection", before = text_gesture, callback = gesture_selection, user_data = text_gesture)
+    dpg.add_button(label = "Confirm selection", before = text_gesture, callback = gesture_selection, user_data = text_gesture)
 
-dpg.create_viewport(title = "User Configuration", width = 600, height = 400)
+dpg.create_viewport(title = "User Configuration", width = 650, height = 550)
 dpg.setup_dearpygui()
 dpg.show_viewport()
 dpg.set_primary_window("Primary Window", True)
