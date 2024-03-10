@@ -70,6 +70,15 @@ def all_gestures(sender, value, user_data):
         dpg.set_value(user_data[m], gesture_true[m])
         m += 1
 
+def forward():
+    if dpg.does_item_exist(sensor_menu[0]) == True:
+        for x in range(len(sensor_labels)):
+            dpg.delete_item(sensor_menu[x])
+
+    if dpg.does_item_exist(gesture_menu[0]) == True:
+        for y in range(len(gesture_labels)):
+            dpg.delete_item(gesture_menu[y])
+
 with dpg.window(tag = "Primary Window"):
     dpg.add_text("Welcome to the user configuration window. Please follow the directions below to set up. ")
 
@@ -87,10 +96,13 @@ with dpg.window(tag = "Primary Window"):
     sensor_menu[8] = dpg.add_menu_item(tag = "accel", label = "Accelerometer (IMU)", check = True)
     sensor_menu[9] = dpg.add_menu_item(tag = "gyro", label = "Gyroscope (IMU)", check = True)
     
-    dpg.add_button(label = "Clear selection", callback = clear_sensors, user_data = sensor_menu, pos = [240,224])
-    dpg.add_button(label = "Select all", callback = all_sensors, user_data = sensor_menu, pos = [150,224])
     text_sensor = dpg.add_text("You have selected the following sensors: ")
-    dpg.add_button(label = "Confirm selection", before = text_sensor, callback = sensor_selection, user_data = text_sensor)
+
+    with dpg.group(horizontal = True):
+        dpg.add_button(label = "Confirm selection", callback = sensor_selection, user_data = text_sensor)
+        dpg.add_button(label = "Clear selection", callback = clear_sensors, user_data = sensor_menu)
+        dpg.add_button(label = "Select all", callback = all_sensors, user_data = sensor_menu)
+    
     dpg.add_text(" ")
 
     # Gesture selection
@@ -105,10 +117,16 @@ with dpg.window(tag = "Primary Window"):
         gesture_menu[q - 1] = dpg.add_menu_item(tag = "G" + str(q), label = gesture_labels[q - 1], check = True)
         q += 1
     
-    dpg.add_button(label = "Clear selection", callback = clear_gestures, user_data = gesture_menu, pos = [240,452])
-    dpg.add_button(label = "Select all", callback = all_gestures, user_data = gesture_menu, pos = [150,452])
     text_gesture = dpg.add_text("You have selected the following gestures: ")
-    dpg.add_button(label = "Confirm selection", before = text_gesture, callback = gesture_selection, user_data = text_gesture)
+
+    with dpg.group(horizontal = True):
+        dpg.add_button(label = "Confirm selection", callback = gesture_selection, user_data = text_gesture)
+        dpg.add_button(label = "Clear selection", callback = clear_gestures, user_data = gesture_menu)
+        dpg.add_button(label = "Select all", callback = all_gestures, user_data = gesture_menu)
+    
+    dpg.add_button(tag = "Forward", arrow = True, direction = 1, callback = forward)
+
+print(dpg.does_item_exist(sensor_menu[0]))
 
 dpg.create_viewport(title = "User Configuration", width = 650, height = 550)
 dpg.setup_dearpygui()
