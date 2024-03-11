@@ -92,6 +92,14 @@ def forward():
         dpg.delete_item(gest_clear)
         dpg.delete_item(gest_all)
 
+    width, height, channels, data = dpg.load_image("Images/No_Motion.png")
+
+    with dpg.texture_registry(show = True):
+        dpg.add_static_texture(width = width, height = height, default_value = data, tag = "img_1")
+
+    dpg.add_image("img_1", parent = "Primary Window")
+    #dpg.add_image("img_1",width = int(dpg.get_item_width("texture_tag") * 0.7), height = int(dpg.get_item_height("img_1") * 0.7), parent = "Primary Window")
+
 with dpg.window(tag = "Primary Window"):
     welcome_text = dpg.add_text("Welcome to the user configuration window. Please follow the directions below to set up. ")
 
