@@ -12,7 +12,7 @@ def sensor_selection(sender, value, user_data):
 
     indices = [t for t in range(len(sensor_clicked)) if sensor_clicked[t] == True]
     sensors_selected = []
-
+    
     p = 0
     while p < len(indices):
         sensors_selected.append(sensor_labels[indices[p]])
