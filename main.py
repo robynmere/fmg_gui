@@ -46,8 +46,13 @@ def user_enter():
     size = max_file.get()
     sensor_index = sensor_listbox.curselection()
     selected_sensors = ", ".join([sensor_listbox.get(i) for i in sensor_index])
-    selection_text = "You have selected to display the following sensors: " + selected_sensors
-    selection_label = Label(root, text = str(selection_text), bg="#ebecec")
+    selection_text = "You have selected to display the following sensors: " + selected_sensors + '\n \n'
+    global selection_label
+    try:
+        selection_label.after(1,selection_label.destroy())
+    except NameError:
+        need = "command here"
+    selection_label = Label(root, text = str(selection_text), bg="#ebecec", wraplength = 350, justify = "left")
     selection_label.grid(row=14, column=0, sticky="W", columnspan=2)
 
 async def connect_ble(): #sarah BLE initiation function goes here
