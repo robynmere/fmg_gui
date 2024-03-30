@@ -22,7 +22,7 @@ root.title('FMG Wearable Device') #window title
 
 #functions 
 def start_rec(): 
-    exam = Label(root, text="Recording has started.       ", bg="#ebecec")
+    exam = Label(root, text="Recording has started.            ", bg="#ebecec")
     exam.grid(row = 14, column = 0, sticky="W", columnspan=2)
 
 def stop_rec():
@@ -111,7 +111,7 @@ def start_plotting():
 
 
 #graphing user inputs 
-graph_inputs_title = Label(root, text = "Graphing Options")
+graph_inputs_title = Label(root, text = "Please enter graphing preferences in the boxes below.")
 
 display_length_label = Label(root, text = "Display length for graphs (s): ")
 display_length= Entry(root, width=10)
@@ -152,19 +152,19 @@ force_data = np.random.uniform(low=0, high=6, size=100)
 force_fig = plt.figure(figsize=(5,2.5))
 plt.plot(xaxis_time, force_data)
 plt.tight_layout()
-plt.xlabel("time (s)", fontsize=3)
+plt.xlabel("Time (s)", fontsize=4)
 plt.xticks(fontsize=4)
-plt.ylabel("force (N)", fontsize=3)
+plt.ylabel("Force (N)", fontsize=4)
 plt.yticks(fontsize=4)
 plt.title("Force Sensors", fontsize=6)
 
 force_canvas = FigureCanvasTkAgg(force_fig, master=root)
 force_canvas.draw()
-force_canvas.get_tk_widget().grid(row=0, column=5, columnspan=2, rowspan=10, sticky="NW")
+force_canvas.get_tk_widget().grid(row=1, column=5, columnspan=2, rowspan=10, sticky="NW")
 
 
 force_toolbarFrame = tk.Frame(master=root)
-force_toolbarFrame.grid(row=0,column=6, sticky="NE")
+force_toolbarFrame.grid(row=1,column=6, sticky="NE")
 force_toolbar = NavigationToolbar2Tk(force_canvas, force_toolbarFrame)
 
 #angular velocity graph
@@ -173,8 +173,8 @@ angular_fig = plt.figure(figsize=(2.5,1.75))
 plt.plot(xaxis_time, angular_data)
 plt.tight_layout()
 plt.xticks(fontsize=4)
-plt.xlabel("time (s)", fontsize=3)
-plt.ylabel("angular velocity (rad/s)", fontsize=3)
+plt.xlabel("Time (s)", fontsize=4)
+plt.ylabel("Angular Velocity (deg/s)", fontsize=4)
 plt.yticks(fontsize=4)
 plt.title("Angular Velocity", fontsize=6)
 
@@ -194,9 +194,9 @@ accel_fig = plt.figure(figsize=(2.5,1.75))
 plt.plot(xaxis_time, accel_data)
 plt.tight_layout()
 plt.xticks(fontsize=4)
-plt.xlabel("time (s)", fontsize=3)
+plt.xlabel("Time (s)", fontsize=4)
 plt.yticks(fontsize=4)
-plt.ylabel("acceleration (m/s2)", fontsize=3)
+plt.ylabel("Acceleration (m/s2)", fontsize=4)
 plt.title("Acceleration", fontsize=6)
 
 accel_canvas = FigureCanvasTkAgg(accel_fig, master=root)
@@ -209,7 +209,7 @@ accel_toolbar = NavigationToolbar2Tk(accel_canvas, accel_toolbarFrame)
 
 
 #grid layout manager
-graph_inputs_title.grid(row=0, column=0, columnspan=3, sticky="N")
+graph_inputs_title.grid(row=0, column=0, columnspan=3, sticky="NW")
 display_length_label.grid(row=1, column=0, sticky="NW")
 display_length.grid(row=1, column=1, sticky="NW")
 max_file_label.grid(row = 2, column = 0, sticky="NW")
@@ -221,7 +221,7 @@ clear_button1.grid(row=5, column=0, sticky="NW")
 clear_button1.configure(width=10)
 all_button1.grid(row=5, column=0, sticky="NE")
 all_button1.configure(width=10)
-enter_button.grid(row=6, column=0, columnspan=2)
+enter_button.grid(row=6, column=0)
 enter_button.configure(width=20)
 
 line_label1.grid(row=7, column=0, columnspan=2)
