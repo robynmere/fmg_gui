@@ -45,8 +45,8 @@ def user_enter():
     seconds = display_length.get()
     size = max_file.get()
     sensor_index = sensor_listbox.curselection()
-    selected_sensors = ",".join([sensor_listbox.get(i) for i in sensor_index])
-    selection_text = "You have selected to display the following sensors:" + selected_sensors
+    selected_sensors = ", ".join([sensor_listbox.get(i) for i in sensor_index])
+    selection_text = "You have selected to display the following sensors: " + selected_sensors
     selection_label = Label(root, text = str(selection_text), bg="#ebecec")
     selection_label.grid(row=14, column=0, sticky="W", columnspan=2)
 
