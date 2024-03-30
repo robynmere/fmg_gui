@@ -4,6 +4,9 @@ from tkinter import ttk
 import sys
 import os
 from PIL import ImageTk, Image
+import shared_variable
+
+print(shared_variable.selected_names[0])
 
 # closing user_config.py (i hope)
 # user_config.py.close
@@ -81,8 +84,19 @@ image_flex = ImageTk.PhotoImage(Image.open("Images/Wrist_Flexion.png").resize((5
 
 # listing images and their names
 intro_text = "Please perform the gesture shown on each page for 5 seconds each. The time will be shown via progress bar below."
-image_list = [image_header, image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]
-name_list = [intro_text, "No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
+image_all = [image_no, image_chuck, image_open, image_close, image_down, image_up, image_ext, image_flex]
+name_all = ["No Motion","Chuck Grip","Hand Open","Hand Closed","Thumbs Down","Thumbs Up","Wrist Extension","Wrist Flexion"]
+image_list = [image_header]
+name_list = [intro_text]
+gesture_index = []
+
+for i in range(len(shared_variable.selected_names)):
+    gesture_index.append(name_all.index(shared_variable.selected_names[i]))
+
+for i in gesture_index:
+    image_list.append(image_all[i])
+    name_list.append(name_all[i])
+
 j = 0
 img_label = Label(root, image = image_list[j])
 name_label = Label(root, text = name_list[j])

@@ -1,0 +1,1 @@
+selected_names = ['No Motion', 'Chuck Grip', 'Hand Open', 'Hand Closed']
