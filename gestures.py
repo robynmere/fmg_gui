@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 import sys
 import os
-from PIL import ImageTk, Image  
+from PIL import ImageTk, Image
 
 # closing user_config.py (i hope)
 # user_config.py.close

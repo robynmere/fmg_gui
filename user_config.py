@@ -16,6 +16,8 @@ def name_selection():
     spaces_label = Label(root, text = selection_spaces)
     spaces_label.grid(row = 9, column = 0, sticky = "NW", columnspan = 10)
     selected_names = ", ".join([name_listbox.get(i) for i in name_index])
+    shared_variable = open('shared_variable.txt','w')
+    shared_variable.write('selected_names = [' + selected_names + ']')
     selection_text = "You have selected to train the following gestures: " + selected_names
     selection_label = Label(root, text = str(selection_text))
     selection_label.grid(row=9, column=0, sticky = "NW", columnspan = 10)
