@@ -1,1 +1,1 @@
-selected_names = ['No Motion', 'Chuck Grip', 'Hand Open', 'Hand Closed']
+selected_names = ['Hand Closed', 'Thumbs Up']
